@@ -9,6 +9,6 @@ tasks:
     desc: Run linter, formatter and static checks
 
   test:
+    desc: Run pytest
     cmds:
-      - pytest
-    desc: Run all tests
+      - poetry run pytest
