@@ -1,5 +1,7 @@
 # 🧠 OpenRouter Observer
 
+[![PyPI version](https://badge.fury.io/py/openrouter-observer.svg)](https://pypi.org/project/openrouter-observer/)
+
 OpenRouter Observer is a CLI utility that monitors and analyzes LLM requests from structured logs — built for teams using [OpenRouter](https://openrouter.ai/) and logging structured JSON per request.
 
 It provides a streamlined way to:
