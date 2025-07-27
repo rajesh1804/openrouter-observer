@@ -4,13 +4,28 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Poetry
-poetry.lock
+# Virtual Environments
+.env
+*.env
+.venv/
+.poetry/
 
-# VSCode / JetBrains
+# VSCode / JetBrains IDEs
 .vscode/
 .idea/
 
-# Environments
-.env
-.venv/
+# Build and cache
+.cache/
+.mypy_cache/
+dist/
+build/
+
+# Logs and DB
+*.log
+*.sqlite3
+
+# Jupyter
+.ipynb_checkpoints/
+
+src/
+tests/

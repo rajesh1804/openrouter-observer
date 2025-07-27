@@ -1,0 +1,14 @@
+version: "3"
+
+tasks:
+  lint:
+    cmds:
+      - ruff check . --fix
+      - black . --check
+      - mypy src/
+    desc: Run linter, formatter and static checks
+
+  test:
+    cmds:
+      - pytest
+    desc: Run all tests
