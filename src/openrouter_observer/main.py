@@ -12,7 +12,7 @@ import json
 config = load_config()
 print(f"🧪 Loaded config for {config.app.name} (mode={config.app.mode})")
 
-def ingest_log(log_path: Path):
+def report(log_path: Path):
     if not log_path.exists():
         print(f"❌ Log file not found: {log_path}")
         return
@@ -117,7 +117,7 @@ def main():
         help="Tail the log file in real-time and print request summaries"
     )
     parser.add_argument(
-        "--ingest",
+        "--report",
         action="store_true",
         help="Ingest entire log file and print aggregated statistics"
     )
@@ -133,7 +133,7 @@ def main():
         monitor_llm_requests()
     elif args.tail:
         tail_log(Path(config.app.log_path), config.app.poll_interval)
-    elif args.ingest:
+    elif args.report:
         ingest_log(Path(config.app.log_path))
     elif args.export:
         export_log_to_jsonl(Path(config.app.log_path), Path(config.app.export_path))
