@@ -1,5 +1,9 @@
 import argparse
 from openrouter_observer.observer.tracker import monitor_llm_requests
+from openrouter_observer.config_loader import load_config
+
+config = load_config()
+print(f"🧪 Loaded config for {config.app.name} (mode={config.app.mode})")
 
 def main():
     parser = argparse.ArgumentParser(description="🧠 OpenRouter Observer CLI")

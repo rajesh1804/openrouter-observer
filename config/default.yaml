@@ -1,0 +1,10 @@
+app:
+  name: "OpenRouter Observer"
+  version: "0.1.0"
+  mode: "dev"
+  enable_debug: true
+
+observer:
+  log_level: "INFO"
+  max_requests: 100
+  source: "logs/sample.log"
