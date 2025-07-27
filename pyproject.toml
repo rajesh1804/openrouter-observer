@@ -57,3 +57,6 @@ lines-between-types = 1
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.poetry.scripts]
+openrouter-observer = "openrouter_observer.main:main"
