@@ -12,3 +12,8 @@ tasks:
     desc: Run pytest
     cmds:
       - poetry run pytest
+
+  cli:
+    desc: Run CLI with --hello
+    cmds:
+      - poetry run python -m openrouter_observer --hello
