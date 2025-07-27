@@ -7,6 +7,7 @@ from openrouter_observer.utils.parser import parse_openrouter_log
 from openrouter_observer.config_loader import load_config
 from collections import defaultdict
 import statistics
+import json
 
 config = load_config()
 print(f"🧪 Loaded config for {config.app.name} (mode={config.app.mode})")
@@ -57,6 +58,25 @@ def ingest_log(log_path: Path):
         avg_latency = statistics.mean(latencies[model])
         print(f"  - {model}: {count} reqs | ⏱️ Avg Latency: {avg_latency:.2f}s")
 
+def export_log_to_jsonl(log_path: Path, output_path: Path):
+    if not log_path.exists():
+        print(f"❌ Log file not found: {log_path}")
+        return
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    print(f"📤 Exporting parsed logs to: {output_path}")
+    count = 0
+
+    with log_path.open("r", encoding="utf-8") as infile, output_path.open("w", encoding="utf-8") as outfile:
+        for line in infile:
+            parsed = parse_openrouter_log(line)
+            if parsed:
+                json.dump(parsed, outfile)
+                outfile.write("\n")
+                count += 1
+
+    print(f"✅ Export complete: {count} entries written to {output_path}")
 
 def tail_log(log_path: Path, poll_interval: float = 1.0):
     if not log_path.exists():
@@ -92,6 +112,8 @@ def main():
         action="store_true",
         help="Ingest entire log file and print aggregated statistics"
     )
+    parser.add_argument("--export", action="store_true", help="Export parsed log to JSONL file")
+
 
 
     args = parser.parse_args()
@@ -105,6 +127,8 @@ def main():
         tail_log(Path(config.app.log_path), config.app.poll_interval)
     elif args.ingest:
         ingest_log(Path(config.app.log_path))
+    elif args.export:
+        export_log_to_jsonl(Path(config.app.log_path), Path(config.app.export_path))
     else:
         parser.print_help()
 

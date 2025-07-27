@@ -1,0 +1,6 @@
+{"model": "mistralai/mistral-7b-instruct", "latency": 1.24, "prompt": "Write a story about...", "status": "success"}
+{"model": "deepseek/deepseek-coder", "latency": 3.1, "prompt": "Give Python code for...", "status": "failure"}
+{"model": "deepseek/deepseek-coder", "latency": 3.1, "prompt": "Give Python code for...", "status": "failure"}
+{"model": "deepseek/deepseek-coder", "latency": 3.1, "prompt": "Give Python code for...", "status": "failure"}
+{"model": "deepseek/deepseek-coder", "latency": 3.1, "prompt": "Give Python code for...", "status": "failure"}
+{"model": "mistralai/mistral-7b-instruct", "latency": 1.24, "prompt": "Write a story about...", "status": "success"}

@@ -4,7 +4,8 @@ app:
   mode: "dev"
   enable_debug: true
   log_path: "logs/sample.log"
-  poll_interval: 1.0  
+  poll_interval: 1.0
+  export_path: "exports/observer_output.jsonl"
 
 observer:
   log_level: "INFO"
