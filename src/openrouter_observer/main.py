@@ -98,6 +98,15 @@ def tail_log(log_path: Path, poll_interval: float = 1.0):
                 status_icon = "✅" if parsed["status"] == "success" else "❌"
                 print(f"{status_icon} Model: {parsed['model']} | ⏱️ {parsed['latency']}s | 📄 Prompt: {parsed['prompt'][:40]}...")
 
+def head_log_file(file_path: Path, num_lines: int):
+    print(f"📄 Showing last {num_lines} log lines from: {file_path}")
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()[-num_lines:]
+        for line in lines:
+            parsed = parse_openrouter_log(line)
+            if parsed:
+                print(f"🧾 {parsed}")
+
 def main():
     parser = argparse.ArgumentParser(description="🧠 OpenRouter Observer CLI")
     parser.add_argument("--run", action="store_true", help="Start the Observer pipeline")
@@ -113,9 +122,8 @@ def main():
         help="Ingest entire log file and print aggregated statistics"
     )
     parser.add_argument("--export", action="store_true", help="Export parsed log to JSONL file")
-
-
-
+    parser.add_argument("--head", type=int, help="Show last N log lines and exit.")
+    
     args = parser.parse_args()
 
     if args.hello:
@@ -129,6 +137,8 @@ def main():
         ingest_log(Path(config.app.log_path))
     elif args.export:
         export_log_to_jsonl(Path(config.app.log_path), Path(config.app.export_path))
+    elif args.head:
+        head_log_file(Path(config.app.log_path), args.head)
     else:
         parser.print_help()
 
