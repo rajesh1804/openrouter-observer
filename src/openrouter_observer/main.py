@@ -12,7 +12,7 @@ import json
 config = load_config()
 print(f"🧪 Loaded config for {config.app.name} (mode={config.app.mode})")
 
-def report(log_path: Path):
+def report_log(log_path: Path):
     if not log_path.exists():
         print(f"❌ Log file not found: {log_path}")
         return
@@ -123,7 +123,8 @@ def main():
     )
     parser.add_argument("--export", action="store_true", help="Export parsed log to JSONL file")
     parser.add_argument("--head", type=int, help="Show last N log lines and exit.")
-    
+    parser.add_argument("--dry-run", action="store_true", help="Parse file without output (for validation)")
+
     args = parser.parse_args()
 
     if args.hello:
@@ -134,11 +135,20 @@ def main():
     elif args.tail:
         tail_log(Path(config.app.log_path), config.app.poll_interval)
     elif args.report:
-        ingest_log(Path(config.app.log_path))
+        report_log(Path(config.app.log_path))
     elif args.export:
         export_log_to_jsonl(Path(config.app.log_path), Path(config.app.export_path))
     elif args.head:
         head_log_file(Path(config.app.log_path), args.head)
+    elif args.dry_run:
+        print(f"🔍 Running dry run on: {Path(config.app.log_path)}")
+        with Path(config.app.log_path).open("r", encoding="utf-8") as f:
+            total, valid = 0, 0
+            for line in f:
+                total += 1
+                if parse_openrouter_log(line):
+                    valid += 1
+        print(f"✅ Dry run complete: {valid}/{total} lines parsed successfully.")
     else:
         parser.print_help()
 
